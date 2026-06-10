@@ -226,6 +226,28 @@
   color: #06d6a0;
 }
 
+.sidebar-admin__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--highlight);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.sidebar-admin__btn:hover {
+  background: var(--highlight-dark, #304ec7);
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
 .sidebar-admin__logout {
   padding: 6px 12px;
   font-size: 0.8rem;

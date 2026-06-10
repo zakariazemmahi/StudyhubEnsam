@@ -8,14 +8,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 import {
   IconHome, IconGrid, IconStarFilled, IconStar, IconClock, IconInfo,
-  IconFileText, IconBook, IconUnlock, IconX
+  IconFileText, IconBook, IconUnlock, IconX, IconDownload
 } from './Icons';
 import ModuleIcon from './ModuleIcon';
 import './Sidebar.css';
 
 function Sidebar({ isOpen, onClose }) {
   const location = useLocation();
-  const { recentItems, favorites, modules, isAdmin, logoutAdmin } = useData();
+  const { recentItems, favorites, modules, isAdmin, logoutAdmin, exportConfig } = useData();
 
   // Vérifier si un lien est actif
   const isActive = (path) => location.pathname === path;
@@ -157,6 +157,10 @@ function Sidebar({ isOpen, onClose }) {
               <span><IconUnlock size={16} /></span>
               <span>Mode Admin</span>
             </div>
+            <button className="sidebar-admin__btn" onClick={exportConfig} title="Exporter la configuration modules.js">
+              <span><IconDownload size={16} /></span>
+              <span>Exporter modules.js</span>
+            </button>
             <button className="sidebar-admin__logout" onClick={logoutAdmin}>
               Déconnexion
             </button>

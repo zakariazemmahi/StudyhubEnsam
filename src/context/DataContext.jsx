@@ -229,6 +229,74 @@ export function DataProvider({ children }) {
     return results.slice(0, 8);
   }, [modules]);
 
+  // ===== Exporter la configuration modules.js =====
+  const exportConfig = useCallback(() => {
+    const modulesString = JSON.stringify(modules, null, 2);
+    const fileContent = `/**
+ * StudyHub ENSAM — Données officielles des modules S8 (IATD-SI)
+ *
+ * Source : SchoolApp ENSAM — 4ème Année, Filière IATD-SI, 2ème Semestre (S4)
+ *
+ * Structure hiérarchique :
+ *   Module (CodeMod) → Éléments (CodeElem) → Rubriques (vides par défaut, remplies par l'admin)
+ */
+
+// Liste des types de rubriques disponibles
+export const RUBRIQUE_TYPES = [
+  { key: 'cours', label: 'Cours', icon: 'book-open', description: 'Supports de cours et présentations' },
+  { key: 'td', label: 'TD', icon: 'clipboard-list', description: 'Travaux dirigés et exercices guidés' },
+  { key: 'tp', label: 'TP', icon: 'flask', description: 'Travaux pratiques et laboratoires' },
+  { key: 'examens', label: 'Examens', icon: 'file-check', description: 'Sujets d\\'examens des années précédentes' },
+  { key: 'notes', label: 'Notes', icon: 'bar-chart', description: 'Notes et résultats des étudiants' },
+];
+
+// ─── Données officielles des modules ────────────────────────────────────────
+const modulesData = ${modulesString};
+
+export default modulesData;
+
+// ─── Utilitaires statistiques ────────────────────────────────────────────────
+export function getStats(modules) {
+  let totalElements = 0;
+  let totalDocuments = 0;
+  let totalExamens = 0;
+
+  modules.forEach(mod => {
+    totalElements += mod.elements.length;
+    mod.elements.forEach(el => {
+      Object.values(el.rubriques).forEach(docs => {
+        totalDocuments += docs.length;
+      });
+      totalExamens += (el.rubriques.examens?.length || 0);
+    });
+  });
+
+  return {
+    modules: modules.length,
+    elements: totalElements,
+    documents: totalDocuments,
+    examens: totalExamens,
+  };
+}
+`;
+
+    const blob = new Blob([fileContent], { type: 'application/javascript;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'modules.js');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Vider les états locaux pour éviter les doublons lors de l'intégration dans les fichiers sources
+    setAdminDocs([]);
+    setCustomModules([]);
+
+    alert("Configuration modules.js exportée avec succès ! Vos modifications locales ont été nettoyées. Veuillez remplacer le fichier 'src/data/modules.js' de votre projet par le fichier téléchargé.");
+  }, [modules]);
+
   const value = {
     modules,
     favorites,
@@ -249,6 +317,7 @@ export function DataProvider({ children }) {
     setSearchQuery,
     getFilteredModules,
     searchAll,
+    exportConfig,
   };
 
   return (
