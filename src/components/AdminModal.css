@@ -208,6 +208,103 @@
   }
 }
 
+/* --- Icon Grid pour CourseCreationModal --- */
+.admin-modal__icon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.admin-modal__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--hover-bg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 8px;
+}
+
+.admin-modal__icon-btn:hover {
+  border-color: var(--highlight);
+  background: var(--surface);
+  transform: scale(1.05);
+}
+
+.admin-modal__icon-btn--selected {
+  border-color: var(--highlight);
+  background: var(--highlight);
+  color: white;
+}
+
+/* --- Color Grid pour CourseCreationModal --- */
+.admin-modal__color-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.admin-modal__color-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 3px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-modal__color-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--text-light);
+}
+
+.admin-modal__color-btn--selected {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px var(--text);
+}
+
+/* --- Success Message --- */
+.admin-modal__success {
+  padding: 20px;
+  background: rgba(34, 197, 94, 0.1);
+  border-left: 4px solid #22c55e;
+  border-radius: var(--radius);
+  text-align: center;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.admin-modal__success p {
+  margin: 0;
+}
+
+/* --- Textarea --- */
+.admin-modal__textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--hover-bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  resize: vertical;
+  transition: var(--transition);
+}
+
+.admin-modal__textarea:focus {
+  outline: none;
+  border-color: var(--highlight);
+  background: var(--surface);
+}
+
+
 /* --- Message d'aide --- */
 .admin-modal__hint {
   font-size: 0.8rem;

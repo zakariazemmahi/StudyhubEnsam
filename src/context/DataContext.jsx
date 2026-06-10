@@ -20,6 +20,12 @@ export function DataProvider({ children }) {
     return saved ? JSON.parse(saved) : [];
   });
 
+  // ===== Modules personnalisés créés par l'admin (localStorage) =====
+  const [customModules, setCustomModules] = useState(() => {
+    const saved = localStorage.getItem('studyhub-custom-modules');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   // ===== Favoris =====
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('studyhub-favorites');
@@ -47,6 +53,10 @@ export function DataProvider({ children }) {
   }, [adminDocs]);
 
   useEffect(() => {
+    localStorage.setItem('studyhub-custom-modules', JSON.stringify(customModules));
+  }, [customModules]);
+
+  useEffect(() => {
     localStorage.setItem('studyhub-favorites', JSON.stringify(favorites));
   }, [favorites]);
 
@@ -58,14 +68,17 @@ export function DataProvider({ children }) {
     localStorage.setItem('studyhub-admin', JSON.stringify(isAdmin));
   }, [isAdmin]);
 
-  // ===== Fusion des données par défaut + admin =====
+  // ===== Fusion des données par défaut + admin + custom =====
   const modules = useMemo(() => {
     // Deep clone des données par défaut
     const merged = JSON.parse(JSON.stringify(modulesData));
 
+    // Ajouter les modules personnalisés
+    const allModules = [...merged, ...customModules];
+
     // Injecter les documents admin dans les bonnes rubriques
     adminDocs.forEach(({ moduleId, elementId, rubriqueKey, document }) => {
-      const mod = merged.find(m => m.id === moduleId);
+      const mod = allModules.find(m => m.id === moduleId);
       if (!mod) return;
       const el = mod.elements.find(e => e.id === elementId);
       if (!el) return;
@@ -76,8 +89,8 @@ export function DataProvider({ children }) {
       }
     });
 
-    return merged;
-  }, [adminDocs]);
+    return allModules;
+  }, [adminDocs, customModules]);
 
   // ===== Ajouter un document (admin) =====
   const addDocument = useCallback((moduleId, elementId, rubriqueKey, document) => {
@@ -90,6 +103,57 @@ export function DataProvider({ children }) {
       !(d.moduleId === moduleId && d.elementId === elementId &&
         d.rubriqueKey === rubriqueKey && d.document.id === docId)
     ));
+  }, []);
+
+  // ===== Créer un nouveau module personnalisé =====
+  const createModule = useCallback((title, description, icon = 'monitor', color = '#4361ee') => {
+    const newModuleId = Math.max(0, ...modules.map(m => m.id || 0), ...customModules.map(m => m.id || 0)) + 1;
+    const newModule = {
+      id: newModuleId,
+      code: `CUSTOM-${newModuleId}`,
+      title: title.trim(),
+      description: description.trim(),
+      icon,
+      color,
+      semester: 'CUSTOM',
+      vhMod: 0,
+      coefMod: 0,
+      elements: [],
+    };
+    setCustomModules(prev => [...prev, newModule]);
+    return newModule;
+  }, [modules, customModules]);
+
+  // ===== Ajouter un élément à un module personnalisé =====
+  const addElementToModule = useCallback((moduleId, title, description) => {
+    setCustomModules(prev => prev.map(mod => {
+      if (mod.id === moduleId) {
+        const newElementId = Math.max(0, ...mod.elements.map(e => e.id || 0)) + 1;
+        const newElement = {
+          id: newElementId,
+          code: `${mod.code}-${newElementId}`,
+          title: title.trim(),
+          description: description.trim(),
+          vhCTD: 0,
+          vhTP: 0,
+          coefCC: 0,
+          coefEX: 0,
+          rubriques: { cours: [], td: [], tp: [], examens: [], notes: [] },
+        };
+        return {
+          ...mod,
+          elements: [...mod.elements, newElement],
+        };
+      }
+      return mod;
+    }));
+  }, []);
+
+  // ===== Supprimer un module personnalisé =====
+  const deleteModule = useCallback((moduleId) => {
+    setCustomModules(prev => prev.filter(m => m.id !== moduleId));
+    // Aussi supprimer les documents associés
+    setAdminDocs(prev => prev.filter(d => d.moduleId !== moduleId));
   }, []);
 
   // ===== Favoris =====
@@ -173,6 +237,9 @@ export function DataProvider({ children }) {
     searchQuery,
     addDocument,
     removeDocument,
+    createModule,
+    addElementToModule,
+    deleteModule,
     toggleFavorite,
     isFavorite,
     addRecent,

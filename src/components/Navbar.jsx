@@ -7,8 +7,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useData } from '../context/DataContext';
-import { IconSearch, IconX, IconSun, IconMoon, IconLock, IconUnlock, IconShieldLock } from './Icons';
+import { IconSearch, IconX, IconSun, IconMoon, IconLock, IconUnlock, IconShieldLock, IconPlus } from './Icons';
 import ModuleIcon from './ModuleIcon';
+import CourseCreationModal from './CourseCreationModal';
 import './Navbar.css';
 
 function Navbar({ onToggleSidebar }) {
@@ -20,6 +21,7 @@ function Navbar({ onToggleSidebar }) {
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [showCreateCourse, setShowCreateCourse] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const searchRef = useRef(null);
@@ -142,6 +144,18 @@ function Navbar({ onToggleSidebar }) {
 
       {/* Actions à droite */}
       <div className="navbar-actions">
+        {/* Create course button (admin only) */}
+        {isAdmin && (
+          <button
+            className="navbar-action-btn navbar-action-btn--create"
+            onClick={() => setShowCreateCourse(true)}
+            aria-label="Créer un cours"
+            title="Créer un nouveau cours"
+          >
+            <IconPlus size={18} />
+          </button>
+        )}
+
         {/* Dark mode toggle */}
         <button
           className="navbar-action-btn"
@@ -195,6 +209,12 @@ function Navbar({ onToggleSidebar }) {
           </form>
         </div>
       )}
+
+      {/* Modal de création de cours */}
+      <CourseCreationModal
+        isOpen={showCreateCourse}
+        onClose={() => setShowCreateCourse(false)}
+      />
     </header>
   );
 }

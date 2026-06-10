@@ -198,6 +198,15 @@
   background: rgba(6, 214, 160, 0.1);
 }
 
+.navbar-action-btn--create {
+  background: rgba(67, 97, 238, 0.1);
+  color: #4361ee;
+}
+
+.navbar-action-btn--create:hover {
+  background: rgba(67, 97, 238, 0.2);
+}
+
 /* Theme icon animation */
 .navbar-theme-icon {
   display: inline-block;
