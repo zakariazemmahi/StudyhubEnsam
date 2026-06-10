@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        // Redirect all 404s to the index.html with the original path as a query parameter
+        // This allows React Router to handle the routing
+        var path = window.location.pathname.replace(/\/$/, '');
+        var search = window.location.search;
+        if (path && path !== '/' && !path.includes('.')) {
+            window.location.replace('/StudyhubEnsam/?redirect=' + encodeURIComponent(path + search));
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
