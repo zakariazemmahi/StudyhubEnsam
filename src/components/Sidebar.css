@@ -1,0 +1,262 @@
+/**
+ * Sidebar.css — Styles du menu latéral
+ */
+
+/* ===== Sidebar Container ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ===== Overlay mobile ===== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+  animation: fadeIn 0.2s ease;
+}
+
+/* ===== Logo ===== */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.sidebar-logo:hover {
+  background: var(--hover-bg);
+}
+
+.sidebar-logo__icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.sidebar-logo__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.sidebar-logo__name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.sidebar-logo__accent {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--highlight);
+}
+
+/* ===== Close button (mobile) ===== */
+.sidebar-close {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  background: var(--hover-bg);
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.sidebar-close:hover {
+  color: var(--highlight);
+  background: var(--highlight-light);
+}
+
+/* ===== Navigation ===== */
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+
+/* Section avec label */
+.sidebar-section {
+  padding: 8px 16px;
+}
+
+.sidebar-section__label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  padding: 8px 8px 6px;
+  margin-top: 4px;
+}
+
+/* Lien de navigation */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  position: relative;
+  margin: 2px 0;
+}
+
+.sidebar-link:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+/* Lien actif */
+.sidebar-link--active {
+  background: var(--highlight-light);
+  color: var(--highlight);
+  font-weight: 600;
+}
+
+.sidebar-link--active::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  background: var(--highlight);
+  border-radius: 0 3px 3px 0;
+}
+
+/* Icônes */
+.sidebar-link__icon {
+  font-size: 1.15rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar-link__icon--small {
+  font-size: 0.9rem;
+  width: 20px;
+}
+
+/* Lien petit (récents, favoris) */
+.sidebar-link--small {
+  padding: 7px 12px;
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+/* Texte tronqué */
+.sidebar-link__text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Badge compteur (favoris, récents) */
+.sidebar-link__badge {
+  margin-left: auto;
+  background: var(--highlight);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  min-width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Message vide */
+.sidebar-empty {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  padding: 6px 12px;
+  font-style: italic;
+}
+
+/* ===== Section admin ===== */
+.sidebar-admin {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-admin__badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(6, 214, 160, 0.1);
+  border: 1px solid rgba(6, 214, 160, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #06d6a0;
+}
+
+.sidebar-admin__logout {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.sidebar-admin__logout:hover {
+  color: var(--highlight);
+  border-color: var(--highlight);
+  background: var(--highlight-light);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .sidebar-close {
+    display: flex;
+  }
+}

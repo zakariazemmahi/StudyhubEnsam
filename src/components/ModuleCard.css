@@ -1,0 +1,120 @@
+/* ============================================================
+ * ModuleCard.css — Styles pour la carte de module
+ * 
+ * Chaque carte affiche un module dans une grille avec :
+ *   - Bande colorée en haut (accent du module)
+ *   - Animation fade-in-up avec délai personnalisé
+ *   - Effet hover : élévation + ombre accrue
+ * ============================================================ */
+
+/* --- Animation d'entrée --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Conteneur principal de la carte --- */
+.module-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+
+  /* Animation d'entrée avec délai personnalisable via --delay */
+  animation: fadeInUp 0.5s ease-out both;
+  animation-delay: var(--delay, 0s);
+}
+
+/* --- Bande colorée en haut de la carte --- */
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--module-color);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* --- Effet hover : élévation + ombre + bordure subtile --- */
+.module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--module-color);
+}
+
+/* --- Icône emoji du module --- */
+.module-card__icon {
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+/* --- Titre du module --- */
+.module-card__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* --- Description du module (tronquée à 2 lignes) --- */
+.module-card__description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+
+  /* Troncature multi-ligne (2 lignes max) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- Badge compteur d'éléments --- */
+.module-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--highlight);
+  background: var(--highlight-light);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-top: auto;
+  width: fit-content;
+}
+
+/* --- Responsive : petits écrans --- */
+@media (max-width: 480px) {
+  .module-card {
+    padding: 18px;
+  }
+
+  .module-card__icon {
+    font-size: 36px;
+  }
+
+  .module-card__title {
+    font-size: 1rem;
+  }
+}

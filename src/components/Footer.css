@@ -1,0 +1,165 @@
+/* ============================================================
+ * Footer.css — Styles pour le pied de page
+ *
+ * Layout :
+ *   - 3 colonnes (grille responsive → empilement mobile)
+ *   - Barre inférieure avec copyright
+ *   - Light mode : fond primaire, texte blanc
+ *   - Dark mode : fond surface, texte var(--text)
+ * ============================================================ */
+
+/* --- Conteneur principal du footer --- */
+.footer {
+  background: var(--primary);
+  color: #ffffff;
+  padding: 48px 0 0;
+  border-top: 1px solid var(--border);
+  margin-top: auto; /* Pousse le footer en bas de la page */
+}
+
+/* --- Dark mode : fond surface, texte adapté --- */
+body.dark-mode .footer {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* --- Conteneur intérieur : grille 3 colonnes --- */
+.footer__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* --- Colonnes --- */
+.footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- Logo et marque --- */
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.footer__logo-icon {
+  font-size: 1.5rem;
+}
+
+/* --- Description --- */
+.footer__description {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- Titres de section --- */
+.footer__heading {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  opacity: 0.9;
+}
+
+body.dark-mode .footer__heading {
+  color: var(--text);
+}
+
+/* --- Liens de navigation --- */
+.footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer__link {
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: var(--transition);
+  position: relative;
+  width: fit-content;
+}
+
+/* Animation hover : soulignement progressif */
+.footer__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.footer__link:hover {
+  opacity: 1;
+}
+
+.footer__link:hover::after {
+  width: 100%;
+}
+
+/* --- Infos de contact --- */
+.footer__contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.footer__contact-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* --- Barre inférieure (copyright) --- */
+.footer__bottom {
+  margin-top: 32px;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+body.dark-mode .footer__bottom {
+  border-top-color: var(--border);
+}
+
+/* --- Responsive : empilement des colonnes --- */
+@media (max-width: 768px) {
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .footer__logo {
+    justify-content: center;
+  }
+
+  .footer__link {
+    margin: 0 auto;
+  }
+
+  .footer__contact-item {
+    justify-content: center;
+  }
+}

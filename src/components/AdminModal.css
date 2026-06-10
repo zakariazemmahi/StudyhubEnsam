@@ -1,0 +1,217 @@
+/* ============================================================
+ * AdminModal.css — Styles pour le modal d'ajout de document
+ *
+ * Overlay semi-transparent avec backdrop blur
+ * Modal centré avec animation d'entrée (scale + opacity)
+ * Formulaire avec inputs full-width et boutons d'action
+ * ============================================================ */
+
+/* --- Animation d'entrée du modal --- */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* --- Animation d'entrée de l'overlay --- */
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* --- Overlay semi-transparent --- */
+.admin-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200;
+  animation: overlayFadeIn 0.2s ease-out;
+}
+
+/* --- Conteneur du modal (centré) --- */
+.admin-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+  z-index: 201;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+/* --- En-tête du modal --- */
+.admin-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.admin-modal__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+/* --- Bouton de fermeture (X) --- */
+.admin-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+}
+
+.admin-modal__close:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+/* --- Formulaire --- */
+.admin-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --- Groupe de champ (label + input) --- */
+.admin-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-modal__label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Indicateur "requis" */
+.admin-modal__required {
+  color: var(--highlight);
+  margin-left: 2px;
+}
+
+/* --- Inputs et selects --- */
+.admin-modal__input,
+.admin-modal__select {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+
+.admin-modal__input:focus,
+.admin-modal__select:focus {
+  outline: none;
+  border-color: var(--highlight);
+  box-shadow: 0 0 0 3px var(--highlight-light);
+}
+
+/* --- Message d'erreur --- */
+.admin-modal__error {
+  font-size: 0.78rem;
+  color: #ef4444;
+  margin: 0;
+}
+
+/* --- Ligne de boutons d'action --- */
+.admin-modal__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* Bouton commun */
+.admin-modal__btn {
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+}
+
+/* Bouton secondaire (Annuler) */
+.admin-modal__btn--secondary {
+  background: var(--hover-bg);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.admin-modal__btn--secondary:hover {
+  background: var(--border);
+}
+
+/* Bouton primaire (Ajouter) */
+.admin-modal__btn--primary {
+  background: var(--highlight);
+  color: #ffffff;
+}
+
+.admin-modal__btn--primary:hover {
+  background: var(--highlight-hover);
+}
+
+.admin-modal__btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Responsive : modal prend 90% de largeur --- */
+@media (max-width: 560px) {
+  .admin-modal {
+    max-width: 90%;
+    padding: 24px 20px;
+  }
+
+  .admin-modal__actions {
+    flex-direction: column;
+  }
+
+  .admin-modal__btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- Message d'aide --- */
+.admin-modal__hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
