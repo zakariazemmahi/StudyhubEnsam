@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>StudyHub ENSAM</title>
+  <script type="text/javascript">
+    // GitHub Pages SPA Routing Redirection Hack
+    // Extracts the nested route and redirects to the index.html with a query parameter
+    var segment = "StudyhubEnsam";
+    var currentPath = window.location.pathname;
+    
+    // Extract the route part (anything after /StudyhubEnsam)
+    var route = "";
+    var segmentIndex = currentPath.indexOf(segment);
+    if (segmentIndex !== -1) {
+      route = currentPath.substring(segmentIndex + segment.length);
+    }
+    
+    // Redirect to index.html with the route query param
+    window.location.replace(
+      window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "") +
+      "/" + segment + "/?route=" + encodeURIComponent(route) + window.location.hash
+    );
+  </script>
+</head>
+<body>
+</body>
+</html>

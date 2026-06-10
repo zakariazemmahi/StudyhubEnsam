@@ -23,6 +23,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- GitHub Pages SPA routing resolution -->
+    <script type="text/javascript">
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var route = params.get('route');
+        if (route) {
+          var basePath = window.location.pathname.endsWith('/') ? window.location.pathname.slice(0, -1) : window.location.pathname;
+          window.history.replaceState(null, null, basePath + route + window.location.hash);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
