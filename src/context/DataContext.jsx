@@ -107,7 +107,7 @@ export function DataProvider({ children }) {
 
   // ===== Créer un nouveau module personnalisé =====
   const createModule = useCallback((title, description, icon = 'monitor', color = '#4361ee') => {
-    const newModuleId = Math.max(0, ...modules.map(m => m.id || 0), ...customModules.map(m => m.id || 0)) + 1;
+    const newModuleId = Date.now(); // Use timestamp as unique ID
     const newModule = {
       id: newModuleId,
       code: `CUSTOM-${newModuleId}`,
@@ -122,7 +122,7 @@ export function DataProvider({ children }) {
     };
     setCustomModules(prev => [...prev, newModule]);
     return newModule;
-  }, [modules, customModules]);
+  }, []);
 
   // ===== Ajouter un élément à un module personnalisé =====
   const addElementToModule = useCallback((moduleId, title, description) => {

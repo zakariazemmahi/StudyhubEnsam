@@ -22,7 +22,6 @@ function Navbar({ onToggleSidebar }) {
   const [showResults, setShowResults] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [showCreateCourse, setShowCreateCourse] = useState(false);
-  const [showDataMenu, setShowDataMenu] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const searchRef = useRef(null);
